@@ -86,10 +86,36 @@
 		</div> -->
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-
+		Before in Task 1, we only sampled one point per pixel, which can lead to jagged edges. In Task 2, we sample multiple points within each pixel and average their colors to determine the final pixel color when producing the final framebuffer. This process smooths out the edges of shapes and reduces visual artifacts.
+		<br>
+		<br>
+		I changed the rasterizer to store multiple samples for each pixel and average them at the end. Each pixel is divided into smaller samples, and the triangles coverage of those samples creates smoother edges.
+		<br>
+		<br>
+		The images below show basic/test4.svg at sample rates 1, 4, and 16. As the sample rate increases, the thin red triangle becomes less jagged, and its edges appear smoother. The pixels also become more connected, eliminating the gaps and making the triangle appear as a continuous shape.
+		<br>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/task_2_rate_1.png" width="400px"/>
+				  <figcaption>Sampling rate: 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/task_2_rate_4.png" width="400px"/>
+				  <figcaption>Sampling rate: 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/task_2_rate_16.png" width="400px"/>
+				  <figcaption>Sampling rate: 16</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Task 3: Transforms</h2>
-		In this task, I implemented the transformation matrices for translation, scaling, and rotation. These transformations can be combined to move, resize, and rotate different parts of an SVG scene.
+		In this task, I implemented the transformation matrices for translation, scaling, and rotation. These transformations can be combined to move, resize, and rotate different parts in an SVG scene.
 		<br>
 		<br>
 
@@ -98,7 +124,7 @@
 		<br>
 		<br>
 
-		This task helped me understand how to apply multiple transformations to individual objects and how their order influences the final position and orientation of the shapes.
+		This task helped me understand how to apply transformations to individual objects and how their order influences the final position and orientation of the shapes.
 		<figure>
 			<img src="assets/my_robot.png" alt="robot" style="width:100%"/>
 			<figcaption>My customized robot rendered using translation, and rotation.</figcaption>
@@ -132,6 +158,8 @@
 		<br>
 		<br>
 		Nearest sampling selects the closest texel, which can produce a pixelated appearance. Bilinear sampling interpolates the colors of the four surrounding texels using weighted averages, resulting in a smoother texture.
+		<br>
+		<br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
