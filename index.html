@@ -89,7 +89,8 @@
 		Before in Task 1, we only sampled one point per pixel, which can lead to jagged edges. In Task 2, we sample multiple points within each pixel and average their colors to determine the final pixel color when producing the final framebuffer. This process smooths out the edges of shapes and reduces visual artifacts.
 		<br>
 		<br>
-		I changed the rasterizer to store multiple samples for each pixel and average them at the end. Each pixel is divided into smaller samples, and the triangles coverage of those samples creates smoother edges.
+		I changed the rasterizer to store multiple samples for each pixel and average them at the end. 
+		I split each pixel into multiple smaller samples and check whether each sample is inside the triangle. I changed the rasterization pipeline to store the color of each sample in a sample buffer and then average them to get the final pixel color. This helps reduce jagged edges by creating smoother transitions between the triangle and the background.
 		<br>
 		<br>
 		The images below show basic/test4.svg at sample rates 1, 4, and 16. As the sample rate increases, the thin red triangle becomes less jagged, and its edges appear smoother. The pixels also become more connected, eliminating the gaps and making the triangle appear as a continuous shape.
