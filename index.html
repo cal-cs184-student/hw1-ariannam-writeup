@@ -127,10 +127,42 @@
 
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-
+		<!-- Texture mapping assigns a texture to a triangle by interpolating its UV coordinates using barycentric coordinates. These coordinates map points on the screen to corresponding positions in the texture, allowing us to determine the color of each sample.  -->
+		Pixel sampling determines the color of a point on a textured surface by selecting or interpolating colors from a texture image. To implement texture mapping, I used barycentric coordinates to interpolate the UV coordinates of each sample inside a triangle. 
+		<br>
+		<br>
+		Nearest sampling selects the closest texel, which can produce a pixelated appearance. Bilinear sampling interpolates the colors of the four surrounding texels using weighted averages, resulting in a smoother texture.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/nearest-1-sampling-rate.png" width="400px"/>
+				  <figcaption>Nearest sampling at one sample per pixel.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/bilinear-1-sampling-rate.png" width="400px"/>
+				  <figcaption>Bilinear sampling at one sample per pixel.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/nearest-16-sampling-rate.png" width="400px"/>
+				  <figcaption>Nearest sampling at 16 samples per pixel.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/bilinear-16-sampling-rate.png" width="400px"/>
+				  <figcaption>Bilinear sampling at 16 samples per pixel.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br>
+		<br>
+		The nearest sampling at one sample per pixel is super pixelated in the magnified image. Bilinear sampling smooths this out even if we sample at one sample per pixel. A bilinear sampling at 16 samples per pixel is very smooth.
+		Bilinear sampling at 1 sample per pixel is a good example of where bilinear sampling clearly defeats nearest sampling at the same sample rate. However, for the 16 samples per pixel case, the difference is also visible, but not that much as for the 1 sample per pixel case.
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-
+		---
 
 		<!-- <h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
