@@ -28,33 +28,39 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Fall 2026 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Arian Namazi </div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/fa26">cs184.eecs.berkeley.edu/fa26</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw1-ariannam-writeup/">https://cal-cs184-student.github.io/hw1-ariannam-writeup/</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/fa26">cs184.eecs.berkeley.edu/fa26</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/hw1-ariannam">https://github.com/cal-cs184-student/hw1-ariannam</a>
 
-		<figure>
+		<!-- <figure>
 			<img src="assets/lion.jpg" alt="Lion" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		</figure> -->
 
 		<!--
 		We've already added one heading per task, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this assignment, I implemented the basic components of a rasterization pipeline, including triangle rasterization, supersampling, geometric transformations, barycentric color interpolation, texture sampling, and mipmapping. Through these tasks, I gained a better understanding of how geometric shapes and textures are rendered as pixels on a screen.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		We rasterize a triangle by checking which pixels lie inside it. Given three vertices (P_0, P_1, P_2), we examine each pixel in the triangles bounding box. For each edge, we compute the cross product between the edge vector and the vector from the edges starting point to the pixel. The sign of the result tells us which side of the edge the pixel lies on. If the pixel is on the same side of all three edges, it is inside the triangle and is rasterized. We repeat this test for every pixel in the bounding box.
+		<br>
+		<br>
+		My implementation first computes the triangle bounding box. It then loops only over pixel coordinates within that box and evaluates each sample at the pixel center (x+0.5,y+0.5). If the point lies on the same side of all three edges, then the sample is inside the triangle, and the pixel is filled with the triangle's color. The implementation also works regardless of whether the triangle vertices are listed clockwise or counterclockwise.
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
-		<div style="display: flex; flex-direction: column; align-items: center;">
+		<figure>
+			<img src="assets/basic_test4.png" alt="robot" style="width:100%"/>
+			<figcaption>basic/test4.svg at sample rate 1 with the pixel inspector focused on the beginning of the red triangle.</figcaption>
+		</figure>
+		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p> -->
+		<!-- <div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
@@ -77,24 +83,56 @@
 				</td>
 			  </tr>
 			</table>
-		</div>
+		</div> -->
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 
 		<h2>Task 3: Transforms</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For Task 3, I implemented the transformation matrices for translation, scaling, and rotation. These transformations can be combined to move, resize, and rotate different parts of an SVG scene.
+		<br>
+		<br>
+
+		I created my own version of the robot by changing the transforms applied to different body parts. I changed the head rotation, adjusted the position and rotation of the left leg, and changed the arms so that the robot looks like it is cheering with both arms. 
+		He stands with his right leg straight down while his left lower leg is angled, giving him a energetic stance.
+		<br>
+		<br>
+
+		This task helped me understand how to apply multiple transformations to individual objects and how their order influences the final position and orientation of the shapes.
+		<figure>
+			<img src="my_robot.png" alt="robot" style="width:100%"/>
+			<figcaption>My customized robot rendered using translation, rotation, and scaling transformations.</figcaption>
+		</figure>
+
+		The SVG file used for this result is available here: my_robot.svg
 
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Barycentric coordinates describe the position of a point inside a triangle using three weights, one for each vertex. These weights always add up to 1. The closer a point is to a vertex, the greater its corresponding weight.
+		<br>
+		<br>
+		I used barycentric coordinates to interpolate colors across a triangle. Each vertex has its own color, and the color at any point inside the triangle is calculated as a weighted combination of the three vertex colors. This results in a smooth color gradient that blends red, green, and blue across the triangle.
+		<br>
+		<br>
+		As we can see in the circle below, we have a different colors at the circle vertices and want to interpolate smoothly. We use barycentric coordinates, which indicate how close a given point to each vertex. After getting three coefficients, alpha, beta, and gamma, we calculate the weighted sum of each vertex color to assign the current pixel color.
+		
+		<!-- <figure>
+			<img src="assets/triangle_barycentric_coordinates.png" alt="robot" style="width:100%"/>
+			<figcaption>Triangle with one red, one green, and one blue vertex, which should produce a smoothly blended color triangle.</figcaption>
+		</figure> -->
+
+		<figure>
+			<img src="assets/basic_test7.png" alt="robot" style="width:100%"/>
+			<figcaption>basic/test7.svg rendered at sampling rate 1 using barycentric color interpolation.</figcaption>
+		</figure>
+
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
+
+		<!-- <h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Additional Notes (please remove)</h2>
@@ -107,6 +145,6 @@
 				</ul>
 			</li>
 		</ul>
-		</div>
+		</div> -->
 	</body>
 </html>
